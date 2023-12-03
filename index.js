@@ -1,6 +1,7 @@
 /* IMPORTS */
 const express = require('express')
 const path = require('path')
+const fs = require('fs')
 
 /* app néven elindítjuk az express modolunkat */
 const app = express()
