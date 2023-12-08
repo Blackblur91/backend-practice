@@ -9,6 +9,9 @@ const app = express()
 /* meghatározzuk a "port" változót */
 const port = 3000
 
+/*middleware, ami parse-olja a json-t -> ehhez a requestnél be kell állítani a headers-ben a Content-Type: application/json headert */
+app.use(express.json())
+
 /* a localhost:port/ vagy a 127.0.0.1:port/ felkeresésekor elérhetővé tesszük az index.html fájlunkat */
 app.get('/', (req, res) => {
   /* elküldjük az adott helyen lévő fájlunkat (az index.html-t) */
@@ -78,3 +81,6 @@ app.get('/users/:userid', (req, res) => {
     })
   }
 })
+
+app.listen(port, () =>
+  console.log(`app listening on:${port}`))
