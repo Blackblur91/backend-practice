@@ -3,30 +3,30 @@ const express = require('express')
 const path = require('path')
 const fs = require('fs')
 
-/* app néven elindítjuk az express modolunkat */
+/* app néven elindítjuk az express modulunkat */
 const app = express()
 
 /* meghatározzuk a "port" változót */
 const port = 3000
 
-/*middleware, ami parse-olja a json-t -> ehhez a requestnél be kell állítani a headers-ben a Content-Type: application/json headert */
+/* middleware, ami parse-olja a json-t -> ehhez a requestnél be kell állítani a headers-ben a Content-Type: application/json headert */
 app.use(express.json())
 
-/* a localhost:port/ vagy a 127.0.0.1:port/ felkeresésekor elérhetővé tesszük az index.html fájlunkat */
+/* a localhost:port/ vagy 127.0.0.1:port/ felkeresésekor elérhetővé tesszük az index.html fájlunkat*/
 app.get('/', (req, res) => {
-  /* elküldjük az adott helyen lévő fájlunkat (az index.html-t) */
+  /* elküldjük az adott helyen lévő fájlunkat */
   res.sendFile(path.join(__dirname, '/frontend/index.html'))
 })
 
-/* a localhost:port/ vagy a 127.0.0.1:port/ felkeresésekor elérhetővé tesszük az index.html fájlunkat */
+/* a localhost:port/style.css vagy 127.0.0.1:port/style.css felkeresésekor elérhetővé tesszük a style.css fájlunkat*/
 app.get('/style.css', (req, res) => {
-  /* elküldjük az adott helyen lévő fájlunkat(a style.css-t) */
   res.sendFile(path.join(__dirname, '/frontend/static/css/style.css'))
 })
 
 app.get('/script.js', (req, res) => {
   res.sendFile(path.join(__dirname, '/frontend/static/js/script.js'))
 })
+
 /* /public címen elérhetővé tesszük a /frontend/static mappánk tartalmát */
 app.use('/public', express.static(path.join(__dirname, '/frontend/static')))
 
@@ -37,10 +37,6 @@ app.get('/users', (req, res) => {
 app.get('/users/:userid', (req, res) => {
   // res.send(req.params.userid)
   // const userId = Number(req.params.userid)
-
-app.post('newuser', (req, res) => {
-
-})
 
   /* a bejövő paramétert átalakítom számmá (megpróbálom) */
   const userId = parseInt(req.params.userid)
@@ -86,5 +82,13 @@ app.post('newuser', (req, res) => {
   }
 })
 
-app.listen(port, () =>
-  console.log(`app listening on:${port}`))
+app.post('/users/new-user', (req, res) => {
+  console.dir(req.body)
+
+  res.json('ok')
+})
+
+/* elkezdi figyelni az adott portot a számítógépen (localhost vagy 127.0.0.1) */
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
