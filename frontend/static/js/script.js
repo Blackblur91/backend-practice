@@ -1,7 +1,7 @@
 console.log("Loaded")
 
 const rootElement = document.querySelector("#root")
-console.log(rootElement)
+let usersData = []
 
 const formComponent = () => `
 
@@ -13,8 +13,14 @@ const formComponent = () => `
 </form>
 `
 
-const root = document.getElementById("#root")
+const userCardComponent = (userData) => `
+  <div class= "card">
+    <h3>${userData.id}</h3>
+    <h2>${userData.name}</h2>
+  </div>
+  `
 
+const init = () => {
 rootElement.insertAdjacentHTML("beforeend", formComponent())
 
 const formElement = document.querySelector('form')
@@ -37,3 +43,15 @@ formElement.addEventListener('submit', (event) => {
   .then(res => res.json())
   .then(resJson => console.log(resJson))
 })
+
+fetch('/users')
+  .then(res => res.json())
+  .then(data => {
+    usersData = data.map(user => userCardComponent(user))
+    console.log(usersData)
+
+    rootElement.insertAdjacentHTML("beforeend", usersData.join(""))
+  })
+}
+
+init()

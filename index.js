@@ -38,6 +38,10 @@ app.get('/users/:userid', (req, res) => {
   // res.send(req.params.userid)
   // const userId = Number(req.params.userid)
 
+app.post('newuser', (req, res) => {
+
+})
+
   /* a bejövő paramétert átalakítom számmá (megpróbálom) */
   const userId = parseInt(req.params.userid)
 
